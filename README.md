@@ -4,6 +4,7 @@ The Darker Side Randomizer is a WIP project with the end-goal being a website wh
 - Has sufficient logic to never generate a moon with prerequisites if the prerequisites are not also met.
 - Allows for options to turn Toadette achievements on or off, as well as specific achievements (5k coins, purple coin spending).
 - Generates postrequisite moons frequently enough. This is subjective and will take some fine-tuning.
+
 The source code for this project is available at: https://github.com/JKTKops/Darker-Side-Randomizer
 Suggestions and ideas are welcome in the #randomizer channel of the Super Mario Odyssey Speedrunning Discord server.
 
