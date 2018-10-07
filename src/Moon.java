@@ -10,14 +10,14 @@ public class Moon {
         achTags = new String[0];
     }
 
-    public Moon(String moonName, String kingdom, boolean first, String[] tagArray){
+    public Moon(String moonName, String kingdom, boolean first, String... tagArray){
         name = moonName;
         king = kingdom;
         achTags = tagArray;
         firstVisit = first;
     }
 
-    public Moon(String moonName, String kingdom, int level, String[] tagArray){
+    public Moon(String moonName, String kingdom, int level, String... tagArray){
         name = moonName;
         king = kingdom;
         achTags = tagArray;

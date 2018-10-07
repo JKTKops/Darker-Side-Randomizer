@@ -82,6 +82,10 @@ public class Randomizer {
                 standby.add(sourcePool.remove(i));
                 i--;
             }
+            else if(sourcePool.get(i).checkTags("Trace")) {
+                standby.add(sourcePool.remove(i));
+                i--;
+            }
             else if(name.equals("Peach in the Moon Kingdom") ||
                     name.equals("Princess Peach, Home Again!") ||
                     sourcePool.get(i).getKingdom().equals("Dark Side") ||
@@ -113,6 +117,13 @@ public class Randomizer {
         for(int i = 0; i<standby.size(); i++){
             String name = standby.get(i).getName();
             if(Pattern.matches(".*Regular Cup", name)){
+                Moon m = standby.remove(i);
+                sourcePool.add(m);
+                sourcePool.add(m);
+                i--;
+            }
+            else if(name.equals("Walking on the Moon!") || name.equals("Walking the Desert!")
+                    || name.equals("Walking on Ice!")) {
                 Moon m = standby.remove(i);
                 sourcePool.add(m);
                 sourcePool.add(m);
@@ -232,14 +243,11 @@ public class Randomizer {
 
                 String[] tags = {};
                 if (moon.length == 4) {
-                    String[] tagList = {moon[3]};
-                    tags = tagList;
+                    tags = new String[]{moon[3]};
                 } else if (moon.length == 5) {
-                    String[] tagList = {moon[3], moon[4]};
-                    tags = tagList;
+                    tags = new String[]{moon[3], moon[4]};
                 } else if (moon.length == 6) {
-                    String[] tagList = {moon[3], moon[4], moon[5]};
-                    tags = tagList;
+                    tags = new String[]{moon[3], moon[4], moon[5]};
                 }
                 allMoons.add(new Moon(name, king, firstVisit, tags));
             }
@@ -337,6 +345,8 @@ public class Randomizer {
      *
      * If pulled moon was a Regular Cup kfr moon, find the copy of that moon in the source and replace with the Master.
      *
+     * If pulled moon was a low-level Trace Walking moon, find the copy and replace it with the followup.
+     *
      * If pulled moon was RC Car Pro, find the copy of that moon in the source and replace it with "RC Car Champ!".
      *
      * If pulled moon was Jump-Rope Hero, find the copy and replace with "Jump-Rope Genius!".
@@ -423,6 +433,42 @@ public class Randomizer {
             String kingdom = m.getName().split(" ")[0];
             for (int i = 0; i < standby.size(); i++) {
                 if(standby.get(i).getName().matches(kingdom+" Kingdom.*Master Cup")){
+                    for (int j = 0; j < source.size(); j++) {
+                        if(source.get(j) == m){
+                            source.set(j, standby.remove(i));
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        else if(m.getName().equals("Walking the Desert!")){
+            for (int i = 0; i < standby.size(); i++) {
+                if(standby.get(i).getName().equals("More Walking in the Desert!")){
+                    for (int j = 0; j < source.size(); j++) {
+                        if(source.get(j) == m){
+                            source.set(j, standby.remove(i));
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        else if(m.getName().equals("Walking on Ice!")){
+            for (int i = 0; i < standby.size(); i++) {
+                if(standby.get(i).getName().equals("Even More Walking on Ice!")){
+                    for (int j = 0; j < source.size(); j++) {
+                        if(source.get(j) == m){
+                            source.set(j, standby.remove(i));
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        else if(m.getName().equals("Walking on the Moon!")){
+            for (int i = 0; i < standby.size(); i++) {
+                if(standby.get(i).getName().equals("Walking on the Moon: Again!")){
                     for (int j = 0; j < source.size(); j++) {
                         if(source.get(j) == m){
                             source.set(j, standby.remove(i));
