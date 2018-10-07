@@ -347,6 +347,8 @@ public class Randomizer {
      *
      * If pulled moon was a low-level Trace Walking moon, find the copy and replace it with the followup.
      *
+     * If pulled moon was Atop the Highest Tower, find the copy and replace it with Moon Shards in the Sand.
+     *
      * If pulled moon was RC Car Pro, find the copy of that moon in the source and replace it with "RC Car Champ!".
      *
      * If pulled moon was Jump-Rope Hero, find the copy and replace with "Jump-Rope Genius!".
@@ -469,6 +471,18 @@ public class Randomizer {
         else if(m.getName().equals("Walking on the Moon!")){
             for (int i = 0; i < standby.size(); i++) {
                 if(standby.get(i).getName().equals("Walking on the Moon: Again!")){
+                    for (int j = 0; j < source.size(); j++) {
+                        if(source.get(j) == m){
+                            source.set(j, standby.remove(i));
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        else if(m.getName().equals("Atop the Highest Tower")){
+            for (int i = 0; i < standby.size(); i++) {
+                if(standby.get(i).getName().equals("Moon Shards in the Sand")){
                     for (int j = 0; j < source.size(); j++) {
                         if(source.get(j) == m){
                             source.set(j, standby.remove(i));
