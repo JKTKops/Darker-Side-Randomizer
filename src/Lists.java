@@ -538,7 +538,7 @@ public class Lists {
             {"The Spinning Maze: Open!", "Seaside", "false", "Chest"},
             {"The Broodals Are After Some Cookin'", "Luncheon", "true", "Story"},
             {"Under the Cheese Rocks", "Luncheon", "true", "Story"},
-            {"Big Pog on the Volcano: Dive In!", "Luncheon", "true", "Story", "Multi"},
+            {"Big Pot on the Volcano: Dive In!", "Luncheon", "true", "Story", "Multi"},
             {"Climb Up the Cascading Magma", "Luncheon", "true", "Story"},
             {"Cookatiel Showdown!", "Luncheon", "true", "Story", "Multi"},
             {"Piled on the Salt", "Luncheon", "true"},
