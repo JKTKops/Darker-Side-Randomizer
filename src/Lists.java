@@ -705,7 +705,7 @@ public class Lists {
             {"Found with Moon Kingdom Art", "Wooded", "false", "Art", "gp"},
             {"Mysterious Flying Object", "Moon", "false", "Bird"},
             {"Hidden on the Side of the Cliff", "Moon", "false"},
-            {"Jumping as High as a Frog", "Moon", "false"},
+            {"Jumping High as a Frog", "Moon", "false"},
             {"Moon Kingdom Timer Challenge 2", "Moon", "false", "Timer"},
             {"Walking on the Moon: Again!", "Moon", "false", "Trace"},
             {"Moon Kingdom Master Cup", "Moon", "false", "kfr"},
