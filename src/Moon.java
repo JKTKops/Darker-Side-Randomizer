@@ -6,18 +6,18 @@ public class Moon {
     private boolean firstVisit;
 
     //not intended for use, just necessary to allow NecessaryAction to inherit from Moon
-    public Moon () {
+    Moon () {
         achTags = new String[0];
     }
 
-    public Moon(String moonName, String kingdom, boolean first, String... tagArray){
+    Moon(String moonName, String kingdom, boolean first, String... tagArray){
         name = moonName;
         king = kingdom;
         achTags = tagArray;
         firstVisit = first;
     }
 
-    public Moon(String moonName, String kingdom, int level, String... tagArray){
+    Moon(String moonName, String kingdom, int level, String... tagArray){
         name = moonName;
         king = kingdom;
         achTags = tagArray;
@@ -34,7 +34,7 @@ public class Moon {
         return name;
     }
 
-    public String[] getTags(){
+    String[] getTags(){
         return achTags;
     }
 
@@ -46,11 +46,11 @@ public class Moon {
         return firstVisit;
     }
 
-    public int getLevel(){
+    int getLevel(){
         return achLevel;
     }
 
-    public boolean checkTags(String target){
+    boolean checkTags(String target){
         boolean tagged = false;
         for (String s: achTags){
             if(s.equals(target))
@@ -59,14 +59,13 @@ public class Moon {
         return tagged;
     }
 
-    public static int compareByVisit(Moon m1, Moon m2) {
+    static int compareByVisit(Moon m1, Moon m2) {
         Moon[] comparands = {m1, m2};
         int[] comparandBucket = {1, 2};
         for (int i = 0; i < comparands.length; i++) {
             Moon m = comparands[i];
             String king = m.getKingdom();
             boolean fV = m.getFirstVisit();
-            String name = m.getName();
             if (king.equals("Cascade") && fV)
                 comparandBucket[i] = 0;
             else if (king.equals("Sand") && fV)

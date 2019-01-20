@@ -18,7 +18,7 @@ public class Randomizer {
     public static void main(String[] args) {
         randomize("{\"Toadette\": true,\"Rolling in Coins\": true," +
                 "\"Purple Coin Achievements\": true,\"Jump Rope Moons\": true," +
-                "\"Volleyball Moons\": true}", 111, 500);
+                "\"Volleyball Moons\": true}", 2048, 500);
     }
 
     public static void randomize(String optionJSON, long seed, int toPull) {
@@ -29,6 +29,8 @@ public class Randomizer {
         } catch(Exception e){
             System.out.println("JSON could not be parsed.");
         }
+        //TODO: FMS option?
+        //TODO: Peace option?
         //OPTIONS
         toadette = options.get("Toadette");
         boolean rollingInCoins = options.get("Rolling in Coins");
@@ -332,6 +334,7 @@ public class Randomizer {
         }
     }
 
+    // TODO: 10/18/2018  RC car pro is a postrequisite of Remotely Captured Car. whoops
     /**
      * @param source the current location of the moon getting pulled, which must be in index 0
      * @param output the destination of the moon getting pulled, always output
@@ -729,6 +732,7 @@ public class Randomizer {
                     name.equals("Power Moon Knight") || name.equals("Power Moon Wizard") ||
                     name.equals("Checkpoint Flagger") || name.equals("World Warper") ||
                     name.equals("Loaded with Coins") || name.equals("Capturing Novice") ||
+                    //TODO: count captures dynamically (probably force apprentice but not master)
                     name.equals("Capturing Apprentice") || name.equals("Capturing Master")) {
                 output.add(remainingAchievements.remove(i));
                 moonsPulled++;

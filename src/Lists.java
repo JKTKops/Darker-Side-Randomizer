@@ -1,4 +1,4 @@
-public class Lists {
+class Lists {
     // "Cappy" = moons like Pops Out of the Tail
     // "Hat" = Hat-and-Seek moons
     // "Tourist" = not an Achievements, just for randomization
@@ -6,7 +6,7 @@ public class Lists {
     // "Ach" = Achievements moon
     // "Story" = not an Achievements, just to force inclusion
     // "Multi" = not an Achievements, just for moon counting
-    public static final String[][] moons = {
+    static final String[][] moons = {
             {"Frog-Jumping Above the Fog", "Cap", "false"},
             {"Frog-Jumping From the Top Deck", "Cap", "false"},
             {"Cap Kingdom Timer Challenge 1", "Cap", "false", "Timer"},

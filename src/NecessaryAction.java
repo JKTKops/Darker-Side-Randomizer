@@ -3,7 +3,7 @@ public class NecessaryAction extends Moon {
     private String kingdom;
     private boolean firstVisit;
 
-    public NecessaryAction(String act, String king, boolean fV){
+    NecessaryAction(String act, String king, boolean fV){
         super();
         action = act;
         kingdom = king;
