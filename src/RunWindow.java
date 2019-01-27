@@ -28,6 +28,9 @@ public class RunWindow extends JFrame {
     private JRadioButton achievements;
     private JButton backButton;
     private JScrollPane listViewPane;
+    private JRadioButton showAll;
+    private JRadioButton showUncollected;
+    private JRadioButton showCollected;
     private Map<String, JList<Moon>> moonLists;
     private final List<Moon> generatedList;
     private MouseListener crossOffListener;
@@ -42,26 +45,31 @@ public class RunWindow extends JFrame {
         fullListSorts.add(byVisit);
         fullListSorts.add(byKingdom);
 
-        ButtonGroup viewOptions = new ButtonGroup();
+        ButtonGroup listViewButtons = new ButtonGroup();
         //<editor-fold desc="Populating group">
-        viewOptions.add(fullList);
-        viewOptions.add(cap);
-        viewOptions.add(cascade);
-        viewOptions.add(sand);
-        viewOptions.add(lake);
-        viewOptions.add(wooded);
-        viewOptions.add(cloud);
-        viewOptions.add(metro);
-        viewOptions.add(snow);
-        viewOptions.add(seaside);
-        viewOptions.add(luncheon);
-        viewOptions.add(ruined);
-        viewOptions.add(bowsers);
-        viewOptions.add(moon);
-        viewOptions.add(mushroom);
-        viewOptions.add(darkSide);
-        viewOptions.add(achievements);
+        listViewButtons.add(fullList);
+        listViewButtons.add(cap);
+        listViewButtons.add(cascade);
+        listViewButtons.add(sand);
+        listViewButtons.add(lake);
+        listViewButtons.add(wooded);
+        listViewButtons.add(cloud);
+        listViewButtons.add(metro);
+        listViewButtons.add(snow);
+        listViewButtons.add(seaside);
+        listViewButtons.add(luncheon);
+        listViewButtons.add(ruined);
+        listViewButtons.add(bowsers);
+        listViewButtons.add(moon);
+        listViewButtons.add(mushroom);
+        listViewButtons.add(darkSide);
+        listViewButtons.add(achievements);
         //</editor-fold>
+        ButtonGroup viewOptionButtons = new ButtonGroup();
+        viewOptionButtons.add(showAll);
+        viewOptionButtons.add(showUncollected);
+        viewOptionButtons.add(showCollected);
+        //TODO: make these buttons work
 
         attachCrossingOff();
         JList<Moon> toSet = createJList(generatedList);
@@ -69,7 +77,7 @@ public class RunWindow extends JFrame {
         listViewPane.setViewportView(toSet);
 
         attachBackButton(parentWindow);
-        attachListViewButtons(viewOptions);
+        attachListViewButtons(listViewButtons);
         attachSortButtons();
     }
 
