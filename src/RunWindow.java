@@ -1,4 +1,7 @@
 import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -27,6 +30,7 @@ public class RunWindow extends JFrame {
     private JScrollPane listViewPane;
     private Map<String, JList<Moon>> moonLists;
     private final List<Moon> generatedList;
+    private MouseListener crossOffListener;
 
     RunWindow(List<Moon> setGeneratedList, JFrame parentWindow) {
         super("Darker Side Randomizer");
@@ -59,6 +63,7 @@ public class RunWindow extends JFrame {
         viewOptions.add(achievements);
         //</editor-fold>
 
+        attachCrossingOff();
         JList<Moon> toSet = createJList(generatedList);
         moonLists.put("full", toSet);
         listViewPane.setViewportView(toSet);
@@ -117,10 +122,31 @@ public class RunWindow extends JFrame {
         });
     }
 
+    private void attachCrossingOff() {
+        crossOffListener = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Object c = e.getSource();
+                if (!(c instanceof JList)) {
+                    return;
+                }
+                JList list = (JList) c;
+                if (e.getClickCount() == 2 || SwingUtilities.isRightMouseButton(e)) {
+                    int index = list.locationToIndex(e.getPoint());
+                    if (index >= 0) {
+                        ((Moon) list.getModel().getElementAt(index)).toggleCrossedOff();
+                        listViewPane.updateUI();
+                    }
+                }
+            }
+        };
+    }
+
     private JList<Moon> createJList(List<Moon> list) {
         ListModel temp = new ListModel(list);
         JList<Moon> ret  = new JList<>();
         ret.setModel(temp);
+        ret.addMouseListener(crossOffListener);
         return ret;
     }
 

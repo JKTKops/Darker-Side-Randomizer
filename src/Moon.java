@@ -4,6 +4,7 @@ public class Moon {
     private String[] achTags;
     private int achLevel;
     private boolean firstVisit;
+    private boolean crossedOff = false;
 
     //not intended for use, just necessary to allow NecessaryAction to inherit from Moon
     Moon () {
@@ -30,6 +31,9 @@ public class Moon {
             return "{\n\t\"name\": \""+name+"\",\n\t\"kingdom\": \""+king+"\",\n\t\"first\": "+ getFirstVisit().toString()+"\n}";
         return "{\n\t\"name\": \""+name+"\",\n\t\"kingdom\": \""+king+"\",\n\t\"tag\": \""+achTags[0]+"\",\n\t\"count\": \""+achTags[1]+"\"\n}";
         */
+        if (crossedOff) {
+            return "<html><strike>" + name + "</strike></html>";
+        }
         return name;
     }
 
@@ -51,6 +55,14 @@ public class Moon {
 
     int getLevel() {
         return achLevel;
+    }
+
+    void toggleCrossedOff() {
+        crossedOff = !crossedOff;
+    }
+
+    boolean getCrossedOff() {
+        return crossedOff;
     }
 
     boolean checkTags(String target) {

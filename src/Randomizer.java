@@ -22,10 +22,11 @@ public class Randomizer {
         //TODO: FMS option?
         //TODO: Peace option?
 
-        //TODO: delete debug information
+        /*
         System.out.println("Options:\n\tToadette: " + toadetteAchievements + "\n\tRolling in Coins: " + rollingInCoins
                 + "\n\tPurple Coins: " + purpleCoins + "\n\tJump Rope: " + jumpRope + "\n\tVolleyball: " + volleyball
                 + "\nSeed: " + seed + "\n");
+        */
         toadette = toadetteAchievements;
 
         Random rnd = new Random(seed);
@@ -215,10 +216,6 @@ public class Randomizer {
         }
 
         output.sort(Moon::compareByVisit);
-        for(Moon m: output)
-            System.out.println(m.getName());
-        //System.out.println("'"+output+"'"+"\n"+moonsPulled);
-
         return output;
 }
 

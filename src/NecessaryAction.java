@@ -15,6 +15,9 @@ public class NecessaryAction extends Moon {
         /* A useful debugging toString alternative.
         return "{\n\t\"Action\": \""+action+"\",\n\t\"kingdom\": \""+kingdom+"\",\n\t\"first\": "+ Boolean.toString(firstVisit)+"\n}";
         */
+        if (getCrossedOff()) {
+            return "<html><strike>" + action + "</strike></html>";
+        }
         return action;
     }
 
