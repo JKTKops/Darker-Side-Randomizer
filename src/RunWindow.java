@@ -4,7 +4,6 @@ import java.util.function.Predicate;
 
 public class RunWindow extends JFrame {
     private JPanel MainScreen;
-    private JPanel ViewOptions;
     private JRadioButton fullList;
     private JRadioButton cap;
     private JRadioButton cascade;
@@ -25,7 +24,6 @@ public class RunWindow extends JFrame {
     private JRadioButton darkSide;
     private JRadioButton achievements;
     private JButton backButton;
-    private JLabel inProgressLabel;
     private JScrollPane listViewPane;
     private Map<String, JList<Moon>> moonLists;
     private final List<Moon> generatedList;
