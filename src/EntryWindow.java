@@ -14,7 +14,7 @@ public class EntryWindow {
     private JButton generateRunButton;
     private List<Moon> generatedList;
 
-    private EntryWindow() {
+    private EntryWindow(JFrame thisWindow) {
         toadetteAchievementsCheckBox.setSelected(true);
         toadetteAchievementsCheckBox.addActionListener(e -> {
             if (toadetteAchievementsCheckBox.isSelected()) {
@@ -53,12 +53,20 @@ public class EntryWindow {
                 JOptionPane.showMessageDialog(InitialScreen, "Seed must be a number between 0 and " +
                         Long.MAX_VALUE + ".", "Invalid Seed", JOptionPane.ERROR_MESSAGE);
             }
+
+            thisWindow.setVisible(false);
+            RunWindow frame = new RunWindow(generatedList, thisWindow);
+            frame.setContentPane(frame.getMainScreen());
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.pack();
+            frame.setVisible(true);
+            frame.setResizable(false);
         });
     }
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Darker Side Randomizer");
-        frame.setContentPane(new EntryWindow().InitialScreen);
+        frame.setContentPane(new EntryWindow(frame).InitialScreen);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

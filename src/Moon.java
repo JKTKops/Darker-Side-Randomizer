@@ -10,27 +10,30 @@ public class Moon {
         achTags = new String[0];
     }
 
-    Moon(String moonName, String kingdom, boolean first, String... tagArray){
+    Moon(String moonName, String kingdom, boolean first, String... tagArray) {
         name = moonName;
         king = kingdom;
         achTags = tagArray;
         firstVisit = first;
     }
 
-    Moon(String moonName, String kingdom, int level, String... tagArray){
+    Moon(String moonName, String kingdom, int level, String... tagArray) {
         name = moonName;
         king = kingdom;
         achTags = tagArray;
         achLevel = level;
     }
 
-    public String toString(){
+    public String toString() {
+        /* A useful debugging toString alternative.
         if(!king.equals("Achievements"))
             return "{\n\t\"name\": \""+name+"\",\n\t\"kingdom\": \""+king+"\",\n\t\"first\": "+ getFirstVisit().toString()+"\n}";
         return "{\n\t\"name\": \""+name+"\",\n\t\"kingdom\": \""+king+"\",\n\t\"tag\": \""+achTags[0]+"\",\n\t\"count\": \""+achTags[1]+"\"\n}";
+        */
+        return name;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
@@ -38,19 +41,19 @@ public class Moon {
         return achTags;
     }
 
-    public String getKingdom(){
+    public String getKingdom() {
         return king;
     }
 
-    public Boolean getFirstVisit(){
+    public Boolean getFirstVisit() {
         return firstVisit;
     }
 
-    int getLevel(){
+    int getLevel() {
         return achLevel;
     }
 
-    boolean checkTags(String target){
+    boolean checkTags(String target) {
         boolean tagged = false;
         for (String s: achTags){
             if(s.equals(target))

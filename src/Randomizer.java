@@ -4,12 +4,12 @@ import java.util.regex.Pattern;
 public class Randomizer {
 
     private int moonsToPull = 0;
-    private int[] achievementProgress = new int[Lists.ACHIEVEMENT_TAGS.length+1];
+    private int[] achievementProgress = new int[Lists.ACHIEVEMENT_TAGS.length + 1];
     private boolean[] moonRockMoonPulled = new boolean[15];
     private int[] kingdomFirstVisitMoons = new int[16];
-    private ArrayList<Moon> remainingAchievements = new ArrayList<>();
+    private List<Moon> remainingAchievements = new ArrayList<>();
     private int moonsPulled = 0;
-    private ArrayList<Moon> standby = new ArrayList<>();
+    private List<Moon> standby = new ArrayList<>();
     private boolean toadette = true;
 
     public static void main(String[] args) {
@@ -29,7 +29,7 @@ public class Randomizer {
         toadette = toadetteAchievements;
 
         Random rnd = new Random(seed);
-        ArrayList<Moon> sourcePool = generateCompleteList();
+        List<Moon> sourcePool = generateCompleteList();
 
         moonsToPull = toPull;
 
@@ -164,18 +164,20 @@ public class Randomizer {
                 i--;
             }
             else if(standby.get(i).getKingdom().equals("Dark Side")){
-                Moon m = standby.remove(i);
-                if(m.getName().equals("Arrival at Rabbit Ridge!") || m.getName().equals("Captain Toad on the Dark Side"))
+                Moon m = standby.get(i);
+                if(m.getName().equals("Arrival at Rabbit Ridge!") || m.getName().equals("Captain Toad on the Dark Side")) {
                     sourcePool.add(m);
-                i--;
+                    standby.remove(i);
+                    i--;
+                }
             }
         }
 
-        ArrayList<Moon> output = new ArrayList<>();
+        List<Moon> output = new ArrayList<>();
 
         if(toadette) {
             remainingAchievements = generateAchievementList(sourcePool);
-            ArrayList<Moon> forcedAchievements = pullAchievements(rnd, sourcePool, output);
+            List<Moon> forcedAchievements = pullAchievements(rnd, sourcePool, output);
             for (Moon achievement : forcedAchievements) {
                 pullTaggedMoons(achievement, sourcePool, output, rnd);
             }
@@ -185,7 +187,7 @@ public class Randomizer {
         pullStoryMoons(sourcePool, output);
 
         Collections.shuffle(sourcePool, rnd);
-        for(String kingdom[]: Lists.kingdomFirstVisitReq){
+        for(String kingdom[] : Lists.kingdomFirstVisitReq){
             pullFirstVisitMoons(kingdom[0], sourcePool, output, rnd);
             Collections.shuffle(sourcePool, rnd);
         }
@@ -249,7 +251,7 @@ public class Randomizer {
         return allMoons;
     }
 
-    private static ArrayList<Moon> generateTaggedList(String tag, ArrayList<Moon> parentList){
+    private static ArrayList<Moon> generateTaggedList(String tag, List<Moon> parentList){
         ArrayList<Moon> taggedMoons = new ArrayList<>();
         for (int i = 0; i<parentList.size(); i++) {
             if (parentList.get(i).checkTags(tag)){
@@ -260,7 +262,7 @@ public class Randomizer {
         return taggedMoons;
     }
 
-    private static ArrayList<Moon> generateFirstVisitList(String kingdom, ArrayList<Moon> source){
+    private static ArrayList<Moon> generateFirstVisitList(String kingdom, List<Moon> source){
         ArrayList<Moon> taggedMoons = new ArrayList<>();
         for (int i = 0; i<source.size(); i++) {
             if (source.get(i).getKingdom().equals(kingdom) && source.get(i).getFirstVisit()){
@@ -271,7 +273,7 @@ public class Randomizer {
         return taggedMoons;
     }
 
-    private static ArrayList<Moon> generateAchievementList(ArrayList<Moon> sourceList){
+    private static ArrayList<Moon> generateAchievementList(List<Moon> sourceList){
         ArrayList<Moon> achievements = new ArrayList<>();
         for(int i=0; i<sourceList.size(); i++){
             if(sourceList.get(i).getKingdom().equals("Achievements")){
@@ -282,7 +284,7 @@ public class Randomizer {
         return achievements;
     }
 
-    private void pullTaggedMoons(Moon achievement, ArrayList<Moon> source, ArrayList<Moon> output, Random rnd){
+    private void pullTaggedMoons(Moon achievement, List<Moon> source, List<Moon> output, Random rnd){
         int tagValue = -1;
         for(int i = 0; i<Lists.ACHIEVEMENT_TAGS.length; i++)
             if(achievement.getTags()[0].equals(Lists.ACHIEVEMENT_TAGS[i]))
@@ -298,7 +300,7 @@ public class Randomizer {
         source.addAll(taggedList);
     }
 
-    private void pullFirstVisitMoons(String kingdom, ArrayList<Moon> source, ArrayList<Moon> output, Random rnd){
+    private void pullFirstVisitMoons(String kingdom, List<Moon> source, List<Moon> output, Random rnd){
         int kingdomValue;
         for (kingdomValue = 0; kingdomValue<Lists.kingdomFirstVisitReq.length; kingdomValue++){
             if(Lists.kingdomFirstVisitReq[kingdomValue][0].equals(kingdom)){
@@ -314,7 +316,7 @@ public class Randomizer {
         source.addAll(firstVisitList);
     }
 
-    private void pullStoryMoons(ArrayList<Moon> source, ArrayList<Moon> output){
+    private void pullStoryMoons(List<Moon> source, List<Moon> output){
         for (int i = 0; i < source.size(); i++) {
             if(source.get(i).checkTags("Story")){
                 Moon m = source.remove(i);
@@ -384,7 +386,7 @@ public class Randomizer {
      *
      * NecessaryAction handler for hint art.
      */
-    private void pullMoon(ArrayList<Moon> source, ArrayList<Moon> output, Random rnd){
+    private void pullMoon(List<Moon> source, List<Moon> output, Random rnd){
         Moon m = source.remove(0);
         if(m.checkTags("Multi") && moonsPulled > moonsToPull - 3)
             return;
@@ -715,7 +717,7 @@ public class Randomizer {
         }
     }
 
-    private ArrayList<Moon> pullAchievements(Random rnd, ArrayList<Moon> inCaseOfArt, ArrayList<Moon> outputInCaseOfArt){
+    private List<Moon> pullAchievements(Random rnd, List<Moon> inCaseOfArt, List<Moon> outputInCaseOfArt){
         ArrayList<Moon> achievementSource = new ArrayList<>();
         ArrayList<Moon> output = new ArrayList<>();
         for(int i = 0; i<remainingAchievements.size(); i++) {

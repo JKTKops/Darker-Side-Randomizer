@@ -12,7 +12,10 @@ public class NecessaryAction extends Moon {
 
     @Override
     public String toString() {
+        /* A useful debugging toString alternative.
         return "{\n\t\"Action\": \""+action+"\",\n\t\"kingdom\": \""+kingdom+"\",\n\t\"first\": "+ Boolean.toString(firstVisit)+"\n}";
+        */
+        return action;
     }
 
     public String getName() {
