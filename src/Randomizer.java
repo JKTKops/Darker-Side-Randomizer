@@ -12,11 +12,6 @@ public class Randomizer {
     private List<Moon> standby = new ArrayList<>();
     private boolean toadette = true;
 
-    public static void main(String[] args) {
-        Randomizer randomizer = new Randomizer();
-        randomizer.randomize(true, true, true, true, true, 2048, 500);
-    }
-
     List<Moon> randomize(boolean toadetteAchievements, boolean rollingInCoins, boolean purpleCoins,
             boolean jumpRope, boolean volleyball, long seed, int toPull) {
         //TODO: FMS option?
