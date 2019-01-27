@@ -137,7 +137,70 @@ public class Moon {
         return Lists.indexOfMoon(m1) < Lists.indexOfMoon(m2) ? -1 : 1;
     }
 
-    public static int compareByKingdom(Moon m1, Moon m2) {
+    static int compareByKingdom(Moon m1, Moon m2) {
+        Moon[] comparands = {m1, m2};
+        int[] comparandBucket = {1, 2};
+        for (int i = 0; i < comparands.length; i++) {
+            Moon m = comparands[i];
+            String king = m.getKingdom();
+            switch (king) {
+                case "Cap":
+                    comparandBucket[i] = 0;
+                    break;
+                case "Cascade":
+                    comparandBucket[i] = 1;
+                    break;
+                case "Sand":
+                    comparandBucket[i] = 2;
+                    break;
+                case "Lake":
+                    comparandBucket[i] = 3;
+                    break;
+                case "Wooded":
+                    comparandBucket[i] = 4;
+                    break;
+                case "Cloud":
+                    comparandBucket[i] = 5;
+                    break;
+                case "Lost":
+                    comparandBucket[i] = 6;
+                    break;
+                case "Metro":
+                    comparandBucket[i] = 7;
+                    break;
+                case "Snow":
+                    comparandBucket[i] = 8;
+                    break;
+                case "Seaside":
+                    comparandBucket[i] = 9;
+                    break;
+                case "Luncheon":
+                    comparandBucket[i] = 10;
+                    break;
+                case "Ruined":
+                    comparandBucket[i] = 11;
+                    break;
+                case "Bowser's":
+                    comparandBucket[i] = 12;
+                    break;
+                case "Moon":
+                    comparandBucket[i] = 13;
+                    break;
+                case "Mushroom":
+                    comparandBucket[i] = 14;
+                    break;
+                case "Dark Side":
+                    comparandBucket[i] = 15;
+                    break;
+                case "Achievements":
+                    comparandBucket[i] = 16;
+                    break;
+            }
+        }
+        if (comparandBucket[0] < comparandBucket[1])
+            return -1;
+        if (comparandBucket[0] > comparandBucket[1])
+            return 1;
         return Lists.indexOfMoon(m1) < Lists.indexOfMoon(m2) ? -1 : 1;
     }
 }
