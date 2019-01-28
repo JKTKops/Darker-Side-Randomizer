@@ -99,9 +99,9 @@ public class RunWindow extends JFrame {
             }
         });
 
-        Iterator<AbstractButton> buttons = group.getElements().asIterator();
-        for (JRadioButton button; buttons.hasNext();) {
-            button = (JRadioButton) buttons.next(); // check first hasNext() before so that we get the last one
+        Enumeration<AbstractButton> buttons = group.getElements();
+        for (JRadioButton button; buttons.hasMoreElements();) {
+            button = (JRadioButton) buttons.nextElement(); // check first hasNext() before so that we get the last one
 
             final JRadioButton finalButton = button; // duplicate reference to satisfy compiler bc lambdas
 
