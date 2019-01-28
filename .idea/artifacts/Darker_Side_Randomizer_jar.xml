@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="Darker Side Randomizer:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/Darker_Side_Randomizer_jar</output-path>
+    <output-path>$PROJECT_DIR$</output-path>
     <root id="archive" name="Darker Side Randomizer.jar">
       <element id="module-output" name="Darker Side Randomizer" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.3.0-RC1/junit-jupiter-api-5.3.0-RC1.jar" path-in-jar="/" />

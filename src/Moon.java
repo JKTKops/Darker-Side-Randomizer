@@ -107,7 +107,7 @@ public class Moon {
                 comparandBucket[i] = 11;
             else if (king.equals("Moon") && fV)
                 comparandBucket[i] = 12;
-            else if (king.equals("Mushroom") && fV)
+            else if (king.equals("Mushroom"))
                 comparandBucket[i] = 13;
             else if (king.equals("Snow") && !fV)
                 comparandBucket[i] = 14;
