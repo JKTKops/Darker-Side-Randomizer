@@ -34,7 +34,7 @@ public class EntryWindow {
 
         generateRunButton.addActionListener(e -> {
             //TODO: Open RunWindow for the generated route
-            long seed;
+            long seed = 0;
             try {
                 seed = Long.parseLong(seedField.getText());
                 if (seed < 0) {
@@ -55,7 +55,7 @@ public class EntryWindow {
             }
 
             thisWindow.setVisible(false);
-            RunWindow frame = new RunWindow(generatedList, thisWindow);
+            RunWindow frame = new RunWindow(seed, generatedList, thisWindow);
             frame.setContentPane(frame.getMainScreen());
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();

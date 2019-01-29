@@ -1,9 +1,14 @@
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.View;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class RunWindow extends JFrame {
     private JPanel MainScreen;
@@ -16,6 +21,7 @@ public class RunWindow extends JFrame {
     private JRadioButton byVisit;
     private JRadioButton byKingdom;
     private JRadioButton cloud;
+    private JRadioButton lost;
     private JRadioButton metro;
     private JRadioButton snow;
     private JRadioButton seaside;
@@ -31,14 +37,22 @@ public class RunWindow extends JFrame {
     private JRadioButton showAll;
     private JRadioButton showUncollected;
     private JRadioButton showCollected;
-    private Map<String, JList<Moon>> moonLists;
+    private JTextField searchBar;
+    private JLabel seedLabel;
     private final List<Moon> generatedList;
     private MouseListener crossOffListener;
 
-    RunWindow(List<Moon> setGeneratedList, JFrame parentWindow) {
+    private enum ViewOptions { All, Collected, Uncollected }
+    private enum SortOptions { Kingdom, Visit }
+
+    private String filterKingdom = "Full List";
+    private ViewOptions filterView = ViewOptions.All;
+    private SortOptions sort = SortOptions.Visit;
+
+    RunWindow(long seed, List<Moon> setGeneratedList, JFrame parentWindow) {
         super("Darker Side Randomizer");
 
-        moonLists = new HashMap<>();
+        seedLabel.setText("Seed: " + seed);
         generatedList = setGeneratedList;
 
         ButtonGroup fullListSorts = new ButtonGroup();
@@ -54,6 +68,7 @@ public class RunWindow extends JFrame {
         listViewButtons.add(lake);
         listViewButtons.add(wooded);
         listViewButtons.add(cloud);
+        listViewButtons.add(lost);
         listViewButtons.add(metro);
         listViewButtons.add(snow);
         listViewButtons.add(seaside);
@@ -69,30 +84,23 @@ public class RunWindow extends JFrame {
         viewOptionButtons.add(showAll);
         viewOptionButtons.add(showUncollected);
         viewOptionButtons.add(showCollected);
-        //TODO: make these buttons work
 
         attachCrossingOff();
-        JList<Moon> toSet = createJList(generatedList);
-        moonLists.put("full", toSet);
-        listViewPane.setViewportView(toSet);
 
         attachBackButton(parentWindow);
         attachListViewButtons(listViewButtons);
+        attachViewOptionButtons();
         attachSortButtons();
+        attachSearchBar();
+
+        updateList();
     }
 
-    private void attachBackButton(JFrame parentWindow) {
-        backButton.addActionListener(e -> {
-            parentWindow.setVisible(true);
-            this.dispose();
-        });
-    }
     private void attachListViewButtons(ButtonGroup group) {
         fullList.addItemListener(e -> {
             if (fullList.isSelected()) {
                 byVisit.setEnabled(true);
                 byKingdom.setEnabled(true);
-                listViewPane.setViewportView(moonLists.get("full"));
             } else {
                 byVisit.setEnabled(false);
                 byKingdom.setEnabled(false);
@@ -101,32 +109,130 @@ public class RunWindow extends JFrame {
 
         Enumeration<AbstractButton> buttons = group.getElements();
         for (JRadioButton button; buttons.hasMoreElements();) {
-            button = (JRadioButton) buttons.nextElement(); // check first hasNext() before so that we get the last one
+            button = (JRadioButton) buttons.nextElement();
+            JRadioButton finalButton = button;
 
-            final JRadioButton finalButton = button; // duplicate reference to satisfy compiler bc lambdas
-
-            if (finalButton == fullList) continue;
             finalButton.addActionListener(e -> {
                 if (finalButton.isSelected()) {
-                    setKingdomFilter(finalButton.getText());
+                    filterKingdom = finalButton.getText();
+                    updateList();
                 }
             });
         }
     }
 
-    private void attachSortButtons() {
-        byVisit.addActionListener(e -> {
-            if (byVisit.isSelected()) {
-                JList currentList = (JList) listViewPane.getViewport().getView();
-                ((ListModel) currentList.getModel()).sort(Moon::compareByVisit);
+    private void attachViewOptionButtons() {
+        showAll.addActionListener(e -> {
+            if (showAll.isSelected()) {
+                filterView = ViewOptions.All;
+                updateList();
             }
         });
+        showCollected.addActionListener(e -> {
+            if (showCollected.isSelected()) {
+                filterView = ViewOptions.Collected;
+                updateList();
+            }
+        });
+        showUncollected.addActionListener(e -> {
+            if (showUncollected.isSelected()) {
+                filterView = ViewOptions.Uncollected;
+                updateList();
+            }
+        });
+    }
 
+    private void attachSortButtons() {
         byKingdom.addActionListener(e -> {
             if (byKingdom.isSelected()) {
-                JList currentList = (JList) listViewPane.getViewport().getView();
-                ((ListModel) currentList.getModel()).sort(Moon::compareByKingdom);
+                sort = SortOptions.Kingdom;
+                updateList();
             }
+        });
+        byVisit.addActionListener(e -> {
+            if (byVisit.isSelected()) {
+                sort = SortOptions.Visit;
+                updateList();
+            }
+        });
+    }
+
+    private void attachSearchBar() {
+        searchBar.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateList();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateList();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateList();
+            }
+        });
+    }
+
+    private void updateList() {
+        Predicate<Moon> kingdomFilter;
+        Predicate<Moon> collectedFilter;
+        Predicate<Moon> searchFilter = m -> m.getName().toLowerCase().contains(searchBar.getText().toLowerCase());
+
+        if (filterKingdom.equals("Full List")) {
+            kingdomFilter = m -> true;
+        } else {
+            kingdomFilter = m -> m.getKingdom().equals(filterKingdom);
+        }
+
+        switch (filterView) {
+            case Collected:
+                collectedFilter = Moon::getCrossedOff;
+                break;
+            case Uncollected:
+                collectedFilter = m -> !m.getCrossedOff();
+                break;
+            case All:
+            default:
+                collectedFilter = m -> true;
+                break;
+        }
+
+        ListModel temp = new ListModel(
+                generatedList.stream()
+                .filter(searchFilter)
+                .filter(kingdomFilter)
+                .filter(collectedFilter)
+                .collect(Collectors.toList()));
+        if (filterKingdom.equals("Full List")) {
+            Comparator<Moon> sortComparator;
+            switch (sort) {
+                case Kingdom:
+                    sortComparator = Moon::compareByKingdom;
+                    break;
+                case Visit:
+                default: // shouldn't happen
+                    sortComparator = Moon::compareByVisit;
+                    break;
+            }
+            temp.sort(sortComparator);
+        }
+        listViewPane.setViewportView(createJList(temp));
+    }
+
+    private JList<Moon> createJList(ListModel listModel) {
+        JList<Moon> ret  = new JList<>();
+        ret.setModel(listModel);
+        ret.addMouseListener(crossOffListener);
+        return ret;
+    }
+
+    private void attachBackButton(JFrame parentWindow) {
+        backButton.addActionListener(e -> {
+            parentWindow.setVisible(true);
+            this.dispose();
         });
     }
 
@@ -150,24 +256,6 @@ public class RunWindow extends JFrame {
         };
     }
 
-    private JList<Moon> createJList(List<Moon> list) {
-        ListModel temp = new ListModel(list);
-        JList<Moon> ret  = new JList<>();
-        ret.setModel(temp);
-        ret.addMouseListener(crossOffListener);
-        return ret;
-    }
-
-    private void setKingdomFilter(String kingdom) {
-        JList<Moon> toSet = moonLists.get(kingdom);
-        if (toSet == null) {
-            toSet = createJList(generatedList);
-            ((ListModel) toSet.getModel()).removeIf(m -> !m.getKingdom().equals(kingdom));
-            moonLists.put(kingdom, toSet);
-        }
-        listViewPane.setViewportView(toSet);
-    }
-
     JPanel getMainScreen() {
         return MainScreen;
     }
@@ -177,6 +265,14 @@ public class RunWindow extends JFrame {
 
         ListModel(List<Moon> setList) {
             list = new ArrayList<>(setList);
+        }
+
+        ListModel(ListModel setList) {
+            list = setList.getList();
+        }
+
+        private List<Moon> getList() {
+            return list;
         }
 
         @Override
@@ -197,6 +293,10 @@ public class RunWindow extends JFrame {
         void removeIf(Predicate<Moon> condition) {
             list.removeIf(condition);
             fireIntervalRemoved(this, 0, 0);
+        }
+
+        Stream<Moon> stream () {
+            return list.stream();
         }
     }
 }
