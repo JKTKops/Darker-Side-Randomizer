@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Moon {
     private String name;
     private String king;
@@ -214,5 +216,18 @@ public class Moon {
         if (comparandBucket[0] > comparandBucket[1])
             return 1;
         return Lists.indexOfMoon(m1) < Lists.indexOfMoon(m2) ? -1 : 1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Moon moon = (Moon) o;
+        return Objects.equals(name, moon.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

@@ -1,5 +1,6 @@
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Randomizer {
 
@@ -161,7 +162,7 @@ public class Randomizer {
             }
             else if(standby.get(i).getKingdom().equals("Dark Side")){
                 Moon m = standby.get(i);
-                if(m.getName().equals("Arrival at Rabbit Ridge!") || m.getName().equals("Captain Toad on the Dark Side")) {
+                if(m.getName().equals("Arrival at Rabbit Ridge!") || m.getName().equals("Captain Toad on the Dark Side!")) {
                     sourcePool.add(m);
                     standby.remove(i);
                     i--;
@@ -210,7 +211,6 @@ public class Randomizer {
             }
         }
 
-        output.sort(Moon::compareByVisit);
         return output;
 }
 
