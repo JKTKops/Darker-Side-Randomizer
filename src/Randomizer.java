@@ -635,8 +635,8 @@ public class Randomizer {
         }
 
         if((toadette || m.checkTags("Peach")) && m.getTags().length > 0){
-            for(String tag: m.getTags()){
-                for(int i = 0; i<Lists.ACHIEVEMENT_TAGS.length; i++){
+            for(String tag : m.getTags()){
+                for(int i = 0; i < Lists.ACHIEVEMENT_TAGS.length; i++){
                     if(tag.equals(Lists.ACHIEVEMENT_TAGS[i])){
                         achievementProgress[i]++;
                         //Lists.ACHIEVEMENT_LEVELS[i] contains the levels for tag[i]

@@ -972,7 +972,7 @@ class Lists {
 
     static final String[] ACHIEVEMENT_TAGS = {"8-bit", "Art", "Bird", "Cappy", "Chest",
             "Fishing", "Goomba", "gp", "Hat", "kfr", "Mips", "Music", "Notes", "Outfit",
-            "Peach", "Seed", "Sheep", "Slots", "Sphynx", "Timer"};
+            "Peach", "Seed", "Sheep", "Slots", "Sphynx", "Timer", "Toad"};
 
     static final int[][] ACHIEVEMENT_LEVELS = {{10, 25}, //8-bit
             {5,15}, //art
@@ -993,7 +993,8 @@ class Lists {
             {4}, //sheep
             {3}, //slots
             {3}, //sphynx
-            {10,25} //timer
+            {10,25}, //timer
+            {5, 10} //Toad
     };
 
     static final String[][] kingdomFirstVisitReq = {
