@@ -11,7 +11,6 @@ Suggestions and ideas are welcome in the #randomizer channel of the Super Mario 
 To run the randomizer, simply run the .jar file in the root directory. Requires Java 10+.
  
 TODO:
-- Attach the view option buttons
 - Dynamic interaction with the Capturing Master moon (difficulty is currently hard to assess)
 - FMS Option (easy)
 - Options to not force World Peace (long-term, difficult)
