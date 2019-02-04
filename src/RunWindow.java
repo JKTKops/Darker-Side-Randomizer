@@ -1,10 +1,7 @@
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.View;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -54,6 +51,7 @@ public class RunWindow extends JFrame {
 
         seedLabel.setText("Seed: " + seed);
         generatedList = setGeneratedList;
+        generatedList.sort(Moon::compareByVisit);
 
         ButtonGroup fullListSorts = new ButtonGroup();
         fullListSorts.add(byVisit);
