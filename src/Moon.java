@@ -33,10 +33,16 @@ public class Moon {
             return "{\n\t\"name\": \""+name+"\",\n\t\"kingdom\": \""+king+"\",\n\t\"first\": "+ getFirstVisit().toString()+"\n}";
         return "{\n\t\"name\": \""+name+"\",\n\t\"kingdom\": \""+king+"\",\n\t\"tag\": \""+achTags[0]+"\",\n\t\"count\": \""+achTags[1]+"\"\n}";
         */
-        if (crossedOff) {
-            return "<html><strike>" + name + "</strike></html>";
+        String out = name;
+
+        if (king.equals("Achievements")) {
+            out += ": " + achTags[1];
         }
-        return name;
+
+        if (crossedOff) {
+            return "<html><strike>" + out + "</strike></html>";
+        }
+        return out;
     }
 
     public String getName() {
