@@ -1,13 +1,9 @@
-public class NecessaryAction extends Moon {
+public class NecessaryAction extends ListElement {
     private String action;
-    private String kingdom;
-    private boolean firstVisit;
 
     NecessaryAction(String act, String king, boolean fV){
-        super();
+        super(act, king, fV);
         action = act;
-        kingdom = king;
-        firstVisit = fV;
     }
 
     @Override
@@ -21,15 +17,8 @@ public class NecessaryAction extends Moon {
         return action;
     }
 
+    @Override
     public String getName() {
         return action;
-    }
-
-    public String getKingdom() {
-        return kingdom;
-    }
-
-    public Boolean getFirstVisit() {
-        return firstVisit;
     }
 }

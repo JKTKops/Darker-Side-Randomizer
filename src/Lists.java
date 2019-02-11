@@ -840,7 +840,7 @@ class Lists {
             {"Found with Dark Side Art 10", "Ruined", "false", "Art", "gp"},
     };
 
-    static int indexOfMoon(Moon moon){
+    static int indexOfElement(ListElement moon) {
         for (int i = 0; i < Lists.moons.length; i++) {
             if(Lists.moons[i][0].equals(moon.getName()))
                 return i;

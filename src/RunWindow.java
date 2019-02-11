@@ -37,7 +37,7 @@ public class RunWindow extends JFrame {
     private JTextField searchBar;
     private JLabel seedLabel;
     private JProgressBar progressBar;
-    private final List<Moon> generatedList;
+    private final List<ListElement> generatedList;
     private MouseListener crossOffListener;
 
     private enum ViewOptions { All, Collected, Uncollected }
@@ -49,7 +49,7 @@ public class RunWindow extends JFrame {
 
     private int totalMoons;
 
-    RunWindow(long seed, List<Moon> setGeneratedList, JFrame parentWindow) {
+    RunWindow(long seed, List<ListElement> setGeneratedList, JFrame parentWindow) {
         super("Darker Side Randomizer");
 
         seedLabel.setText("Seed: " + seed);
@@ -57,7 +57,8 @@ public class RunWindow extends JFrame {
         generatedList.sort(Moon::compareByVisit);
 
         totalMoons = generatedList.stream()
-                .filter(m -> !(m instanceof NecessaryAction))
+                .filter(m -> m instanceof Moon)
+                .map(m -> (Moon) m)
                 .mapToInt(m -> m.checkTags("Multi") ? 3 : 1)
                 .sum();
         progressBar.setMinimum(0);
@@ -187,16 +188,17 @@ public class RunWindow extends JFrame {
 
     private void updateList() {
         int moonsCollected = generatedList.stream()
-                .filter(m -> !(m instanceof NecessaryAction))
-                .filter(Moon::getCrossedOff)
+                .filter(m -> (m instanceof Moon))
+                .map(m -> (Moon) m)
+                .filter(ListElement::getCrossedOff)
                 .mapToInt(m -> m.checkTags("Multi") ? 3 : 1)
                 .sum();
         progressBar.setValue(moonsCollected);
         progressBar.setString(moonsCollected + " / " + totalMoons);
 
-        Predicate<Moon> kingdomFilter;
-        Predicate<Moon> collectedFilter;
-        Predicate<Moon> searchFilter = m -> m.getName().toLowerCase().contains(searchBar.getText().toLowerCase());
+        Predicate<ListElement> kingdomFilter;
+        Predicate<ListElement> collectedFilter;
+        Predicate<ListElement> searchFilter = m -> m.getName().toLowerCase().contains(searchBar.getText().toLowerCase());
 
         if (filterKingdom.equals("Full List")) {
             kingdomFilter = m -> true;
@@ -206,7 +208,7 @@ public class RunWindow extends JFrame {
 
         switch (filterView) {
             case Collected:
-                collectedFilter = Moon::getCrossedOff;
+                collectedFilter = ListElement::getCrossedOff;
                 break;
             case Uncollected:
                 collectedFilter = m -> !m.getCrossedOff();
@@ -224,7 +226,7 @@ public class RunWindow extends JFrame {
                 .filter(collectedFilter)
                 .collect(Collectors.toList()));
         if (filterKingdom.equals("Full List")) {
-            Comparator<Moon> sortComparator;
+            Comparator<ListElement> sortComparator;
             switch (sort) {
                 case Kingdom:
                     sortComparator = Moon::compareByKingdom;
@@ -239,8 +241,8 @@ public class RunWindow extends JFrame {
         listViewPane.setViewportView(createJList(temp));
     }
 
-    private JList<Moon> createJList(ListModel listModel) {
-        JList<Moon> ret  = new JList<>();
+    private JList<ListElement> createJList(ListModel listModel) {
+        JList<ListElement> ret  = new JList<>();
         ret.setModel(listModel);
         ret.addMouseListener(crossOffListener);
         return ret;
@@ -265,7 +267,7 @@ public class RunWindow extends JFrame {
                 if (e.getClickCount() == 2 || SwingUtilities.isRightMouseButton(e)) {
                     int index = list.locationToIndex(e.getPoint());
                     if (index >= 0) {
-                        ((Moon) list.getModel().getElementAt(index)).toggleCrossedOff();
+                        ((ListElement) list.getModel().getElementAt(index)).toggleCrossedOff();
                         listViewPane.updateUI();
                     }
                 }
@@ -277,10 +279,10 @@ public class RunWindow extends JFrame {
         return MainScreen;
     }
 
-    private class ListModel extends AbstractListModel<Moon> {
-        List<Moon> list;
+    private class ListModel extends AbstractListModel<ListElement> {
+        List<ListElement> list;
 
-        ListModel(List<Moon> setList) {
+        ListModel(List<ListElement> setList) {
             list = new ArrayList<>(setList);
         }
 
@@ -288,7 +290,7 @@ public class RunWindow extends JFrame {
             list = setList.getList();
         }
 
-        private List<Moon> getList() {
+        private List<ListElement> getList() {
             return list;
         }
 
@@ -298,21 +300,21 @@ public class RunWindow extends JFrame {
         }
 
         @Override
-        public Moon getElementAt(int index) {
+        public ListElement getElementAt(int index) {
             return list.get(index);
         }
 
-        void sort(Comparator<Moon> comparator) {
+        void sort(Comparator<ListElement> comparator) {
             list.sort(comparator);
             fireContentsChanged(this, 0, list.size());
         }
 
-        void removeIf(Predicate<Moon> condition) {
+        void removeIf(Predicate<ListElement> condition) {
             list.removeIf(condition);
             fireIntervalRemoved(this, 0, 0);
         }
 
-        Stream<Moon> stream () {
+        Stream<ListElement> stream () {
             return list.stream();
         }
     }

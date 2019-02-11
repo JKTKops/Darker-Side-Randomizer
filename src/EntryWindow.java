@@ -12,7 +12,7 @@ public class EntryWindow {
     private JTextField seedField;
     private JButton randomSeedButton;
     private JButton generateRunButton;
-    private List<Moon> generatedList;
+    private List<ListElement> generatedList;
 
     private EntryWindow(JFrame thisWindow) {
         toadetteAchievementsCheckBox.setSelected(true);
