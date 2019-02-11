@@ -36,6 +36,7 @@ public class RunWindow extends JFrame {
     private JRadioButton showCollected;
     private JTextField searchBar;
     private JLabel seedLabel;
+    private JProgressBar progressBar;
     private final List<Moon> generatedList;
     private MouseListener crossOffListener;
 
@@ -46,12 +47,22 @@ public class RunWindow extends JFrame {
     private ViewOptions filterView = ViewOptions.All;
     private SortOptions sort = SortOptions.Visit;
 
+    private int totalMoons;
+
     RunWindow(long seed, List<Moon> setGeneratedList, JFrame parentWindow) {
         super("Darker Side Randomizer");
 
         seedLabel.setText("Seed: " + seed);
         generatedList = setGeneratedList;
         generatedList.sort(Moon::compareByVisit);
+
+        totalMoons = generatedList.stream()
+                .filter(m -> !(m instanceof NecessaryAction))
+                .mapToInt(m -> m.checkTags("Multi") ? 3 : 1)
+                .sum();
+        progressBar.setMinimum(0);
+        progressBar.setMaximum(totalMoons);
+        progressBar.setStringPainted(true);
 
         ButtonGroup fullListSorts = new ButtonGroup();
         fullListSorts.add(byVisit);
@@ -175,6 +186,14 @@ public class RunWindow extends JFrame {
     }
 
     private void updateList() {
+        int moonsCollected = generatedList.stream()
+                .filter(m -> !(m instanceof NecessaryAction))
+                .filter(Moon::getCrossedOff)
+                .mapToInt(m -> m.checkTags("Multi") ? 3 : 1)
+                .sum();
+        progressBar.setValue(moonsCollected);
+        progressBar.setString(moonsCollected + " / " + totalMoons);
+
         Predicate<Moon> kingdomFilter;
         Predicate<Moon> collectedFilter;
         Predicate<Moon> searchFilter = m -> m.getName().toLowerCase().contains(searchBar.getText().toLowerCase());

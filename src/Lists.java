@@ -975,7 +975,7 @@ class Lists {
             "Peach", "Seed", "Sheep", "Slots", "Sphynx", "Timer", "Toad"};
 
     static final int[][] ACHIEVEMENT_LEVELS = {{10, 25}, //8-bit
-            {5,15}, //art
+            {5, 15}, //art
             {5}, //bird
             {3, 10}, //cappy
             {15, 25}, //chest
@@ -983,17 +983,17 @@ class Lists {
             {5}, //goomba
             {15, 45}, //gp
             {5}, //hat
-            {10,22}, //kfr
-            {5,10}, //mips
+            {10, 22}, //kfr
+            {5, 10}, //mips
             {5}, //music
-            {5,20}, //notes
-            {3,8,15}, //outfit
-            {5,10}, //peach
-            {5,10}, //seed
+            {5, 20}, //notes
+            {3, 8, 15}, //outfit
+            {5, 10}, //peach
+            {5, 10}, //seed
             {4}, //sheep
             {3}, //slots
             {3}, //sphynx
-            {10,25}, //timer
+            {10, 25}, //timer
             {5, 10} //Toad
     };
 
