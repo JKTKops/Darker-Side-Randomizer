@@ -1,3 +1,4 @@
+@Deprecated
 class Lists {
     // "Cappy" = moons like Pops Out of the Tail
     // "Hat" = Hat-and-Seek moons

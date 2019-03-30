@@ -17,8 +17,8 @@ public class Randomizer {
         //TODO: FMS option?
         //TODO: Peace option?
 
-        /*
-        System.out.println("Options:\n\tToadette: " + toadetteAchievements + "\n\tRolling in Coins: " + rollingInCoins
+
+        /*System.out.println("Options:\n\tToadette: " + toadetteAchievements + "\n\tRolling in Coins: " + rollingInCoins
                 + "\n\tPurple Coins: " + purpleCoins + "\n\tJump Rope: " + jumpRope + "\n\tVolleyball: " + volleyball
                 + "\nSeed: " + seed + "\n");
         */

@@ -267,7 +267,7 @@ public class RunWindow extends JFrame {
                 if (e.getClickCount() == 2 || SwingUtilities.isRightMouseButton(e)) {
                     int index = list.locationToIndex(e.getPoint());
                     if (index >= 0) {
-                        ((ListElement) list.getModel().getElementAt(index)).toggleCrossedOff();
+                        ((ListElement) list.getModel().getElementAt(index)).toggleStrike();
                         listViewPane.updateUI();
                     }
                 }

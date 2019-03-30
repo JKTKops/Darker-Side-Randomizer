@@ -1,5 +1,6 @@
 import java.util.Objects;
 
+@Deprecated
 abstract class ListElement {
     private String name;
     private String kingdom;
@@ -33,7 +34,7 @@ abstract class ListElement {
         return false;
     }
 
-    void toggleCrossedOff() {
+    void toggleStrike() {
         crossedOff = !crossedOff;
     }
 

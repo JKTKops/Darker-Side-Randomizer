@@ -1,5 +1,6 @@
 import java.util.Objects;
 
+@Deprecated
 public class Moon extends ListElement {
     private String name;
     private String king;
@@ -54,12 +55,10 @@ public class Moon extends ListElement {
         return firstVisit;
     }
 
+    public void toggleStrike() { crossedOff = !crossedOff; }
+
     int getLevel() {
         return achLevel;
-    }
-
-    void toggleCrossedOff() {
-        crossedOff = !crossedOff;
     }
 
     boolean getCrossedOff() {

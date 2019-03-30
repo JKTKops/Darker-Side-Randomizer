@@ -1,3 +1,4 @@
+@Deprecated
 public class NecessaryAction extends ListElement {
     private String action;
 
